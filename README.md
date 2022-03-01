@@ -2,7 +2,7 @@
 
 ## How to run
 
-    git clone ....
+    git clone https://github.com/bitgoalsdeveloper/send_free_tickets.git
     cp .env.example .env
     ## update the key
     npm i
