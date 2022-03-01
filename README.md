@@ -1,4 +1,4 @@
-# Free Tickets Sender
+# Send Free Ticktes
 
 ## How to run
 
