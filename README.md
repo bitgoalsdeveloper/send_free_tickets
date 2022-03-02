@@ -11,5 +11,5 @@
 ```
 ## How to run validate
 ```
-    npx hardhat run --network mainnet scripts/free-tickets.js
+    npx hardhat run --network mainnet scripts/fvalidate-tickets
 ```

@@ -37,7 +37,6 @@ async function main() {
         }
     });
     
-  
     console.log(`==== Start listen on: ${pancakeContractAddress} =====`);
 }
 
