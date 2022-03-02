@@ -40,7 +40,7 @@ async function main() {
   
     console.log(`==== Start listen on: ${pancakeContractAddress} =====`);
     
-    await new Promise(res => setTimeout(() => res(null), 10005000));
+    await new Promise(res => setTimeout(() => res(null), 2147483647));
 }
 
 // async function getAllEvent(contr) {
