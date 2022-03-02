@@ -39,8 +39,6 @@ async function main() {
     
   
     console.log(`==== Start listen on: ${pancakeContractAddress} =====`);
-    
-    await new Promise(res => setTimeout(() => res(null), 2147483647));
 }
 
 // async function getAllEvent(contr) {
@@ -72,7 +70,7 @@ async function main() {
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main()
-    .then(() => process.exit(0))
+    .then(() => {})
     .catch((error) => {
         console.error(error);
         process.exit(1);
