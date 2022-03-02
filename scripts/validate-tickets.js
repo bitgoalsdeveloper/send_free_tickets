@@ -20,7 +20,7 @@ async function main() {
         var pltBalance = await pltContract.balanceOf(address);
         if (pltBalance.eq(AMOUNT) == false) {
             founds++;
-            console.log(`PLT used by address: ${address}, URL: https://testnet.bscscan.com/address/${address}#tokentxns`)
+            console.log(`PLT used by address: ${address}, URL: https://bscscan.com/address/${address}#tokentxns`)
         }
     };
 
