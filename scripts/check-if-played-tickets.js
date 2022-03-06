@@ -1,5 +1,8 @@
 const { ethers } = require("hardhat");
 const storage = require('node-persist');
+const ervy = require('ervy')
+const { bar } = ervy
+
 
 const FROM_BLOCK = 15706768;
 
@@ -15,7 +18,7 @@ async function main() {
     var fromBlock = FROM_BLOCK
     var toBlock = await ethers.provider.getBlockNumber();
 
-    console.log("====  Start scaning events ==== ")
+    console.log("==== Start scaning events ==== ")
     var i = 1;
     var allEvents = []
     do {
@@ -35,25 +38,49 @@ async function main() {
 
     } while (toBlock > currentToBlock)
    
-    console.log("Total Events:" + allEvents.length)
+    console.log(`==== Total Events: ${allEvents.length} ====`)
 
     const addressList = await storage.keys();
     var founds = 0
-    var foundAddress = []
+    var foundAddress = {}
     for (const event of allEvents) {
         var address;
         if (event.args) {
             address = event.args[0];
         }
         
-        if (addressList.includes(address) && !foundAddress.includes(address)) {
-            founds++;
-            foundAddress.push(address)
+        if (addressList.includes(address)) {
+
+            if (foundAddress[address]) {
+                foundAddress[address].push(event.transactionHash);
+            } else {
+                foundAddress[address] = [];
+                founds++;
+            }
             console.log(`PLT used by address: ${address}, URL: https://bscscan.com/address/${address}#tokentxns, Tx: https://bscscan.com/tx/${event.transactionHash}`)
         }
     };
 
+    console.log('======================================================================================================')
     console.log(`Total: ${addressList.length}, Found: ${founds}, Percentage: ${founds / addressList.length * 100}%`)
+    console.log('======================================================================================================')
+
+    console.log(`==== Results ====`)
+    for (var key in foundAddress) {
+        console.log(`Address: ${key}, Count: ${foundAddress[key].length}`)
+    }
+
+    var data = Object.keys(foundAddress).map(function (key, index) {
+        return {
+            key: key,
+            value: foundAddress[key].length
+        }
+    });
+
+    console.log(`==== Bar ====`)
+    console.log(
+        bar(data)
+    )
 }
 
 

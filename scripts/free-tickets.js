@@ -29,7 +29,8 @@ async function main() {
         if(!balance) {
             try {
                 console.log(`==== Sending PLT =====`);
-                await pltContract.transfer(buyer, AMOUNT);
+                var tx = await pltContract.transfer(buyer, AMOUNT);
+                tx = tx.wait();
                 await storage.setItem(buyer.toString(), 1);
             } catch(e) {
                 console.log(e)
