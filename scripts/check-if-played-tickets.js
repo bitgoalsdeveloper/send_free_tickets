@@ -39,13 +39,16 @@ async function main() {
 
     const addressList = await storage.keys();
     var founds = 0
+    var foundAddress = []
     for (const event of allEvents) {
         var address;
         if (event.args) {
             address = event.args[0];
         }
-        if (addressList.includes(address)) {
+        
+        if (addressList.includes(address) && !foundAddress.includes(address)) {
             founds++;
+            foundAddress.push(address)
             console.log(`PLT used by address: ${address}, URL: https://bscscan.com/address/${address}#tokentxns, Tx: https://bscscan.com/tx/${event.transactionHash}`)
         }
     };
