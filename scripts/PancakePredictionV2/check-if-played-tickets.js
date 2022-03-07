@@ -4,7 +4,7 @@ const ervy = require('ervy')
 const { bar } = ervy
 
 
-const FROM_BLOCK = 15706768;
+const FROM_BLOCK = 15856625 ;
 
 async function main() {
     const [owner] = await ethers.getSigners();
@@ -87,7 +87,7 @@ async function main() {
     }
 
     console.log('======================================================================================================')
-    console.log(`Total: ${founds}, More Then One: ${moreThenOne}, Percentage: ${moreThenOne / founds * 100}%`)
+    console.log(`Total: ${founds}, More Then One: ${moreThenOne}, Percentage: ${(moreThenOne / founds) * 100}%`)
     console.log('======================================================================================================')
  
     var data = Object.keys(stats).map(function (key, index) {
@@ -97,9 +97,11 @@ async function main() {
         }
     });
 
-    console.log(`==== Bar ====`)
-    console.log(bar(data))
+    if (data.length > 0) {
+        console.log(`==== Bar ====`)
+        console.log(bar(data))
 
+    }
 }
 
 

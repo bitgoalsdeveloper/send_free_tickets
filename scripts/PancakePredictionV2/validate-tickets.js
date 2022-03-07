@@ -6,7 +6,7 @@ const AMOUNT = ethers.utils.parseEther("0"); // PLT
 async function main() {
     const [owner] = await ethers.getSigners();
     console.log(`==== Running =====`);
-    await storage.init({ dir: './persist',});
+    await storage.init({ dir: './persist_PancakePredictionV2',});
     
     const pltSmallContractABI = ['function transfer(address recipient, uint256 amount) external returns (bool)',
                                  'function balanceOf(address account) external view returns (uint256)'
@@ -23,9 +23,12 @@ async function main() {
             console.log(`PLT used by address: ${address}, URL: https://bscscan.com/address/${address}#tokentxns`)
         }
     };
+   
     console.log('======================================================================================================')
     console.log(`Total: ${addressList.length}, Found: ${founds}, Percentage: ${founds / addressList.length * 100}%`)
-    console.log('======================================================================================================')}
+    console.log('======================================================================================================')
+
+}
 
 
 // We recommend this pattern to be able to use async/await everywhere

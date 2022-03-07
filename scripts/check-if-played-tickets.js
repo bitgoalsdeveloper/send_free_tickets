@@ -81,7 +81,7 @@ async function main() {
     var moreThenOne = 0;
     for (var key in stats) {
         if (key > 1) {
-            moreThenOne++;
+            moreThenOne += stats[key];
         }
         console.log(`Time palys: ${key}, Count: ${stats[key]}`)
     }
