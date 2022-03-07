@@ -18,7 +18,7 @@ async function main() {
     var fromBlock = FROM_BLOCK
     var toBlock = await ethers.provider.getBlockNumber();
 
-    console.log("==== Start scanning events ==== ")
+    console.log(`==== Start scanning events - from block: ${FROM_BLOCK} ==== `)
     var i = 1;
     var allEvents = []
     do {
@@ -37,8 +37,6 @@ async function main() {
 
     } while (toBlock > currentToBlock)
    
-    console.log(`==== Total Events: ${allEvents.length} ====`)
-
     const addressList = await storage.keys();
     var founds = 0
     var foundAddress = {}
