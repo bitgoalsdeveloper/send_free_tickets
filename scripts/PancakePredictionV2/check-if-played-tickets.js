@@ -9,7 +9,7 @@ const FROM_BLOCK = 15706768;
 async function main() {
     const [owner] = await ethers.getSigners();
     console.log(`==== Running =====`);
-    await storage.init({ dir: './persist',});
+    await storage.init({ dir: './persist_PancakePredictionV2',});
     
     const lottoSmallContractABI = ['event TicketsPurchase(address indexed buyer, uint256 indexed lotteryId, uint256 numberTickets)'];
     const lottoContractAddress = '0x6420069F636b86e3fa9D06a5B6AB8d9203e00436';
