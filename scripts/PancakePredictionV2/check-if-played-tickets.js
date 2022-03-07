@@ -89,7 +89,17 @@ async function main() {
     console.log('======================================================================================================')
     console.log(`Total: ${founds}, More Then One: ${moreThenOne}, Percentage: ${moreThenOne / founds * 100}%`)
     console.log('======================================================================================================')
-   
+ 
+    var data = Object.keys(stats).map(function (key, index) {
+        return {
+            key: key,
+            value: stats[key]
+        }
+    });
+
+    console.log(`==== Bar ====`)
+    console.log(bar(data))
+
 }
 
 
