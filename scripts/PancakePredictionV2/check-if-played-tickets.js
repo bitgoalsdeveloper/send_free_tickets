@@ -18,11 +18,10 @@ async function main() {
     var fromBlock = FROM_BLOCK
     var toBlock = await ethers.provider.getBlockNumber();
 
-    console.log("==== Start scaning events ==== ")
+    console.log("==== Start scanning events ==== ")
     var i = 1;
     var allEvents = []
     do {
-        console.log("Scaning Iteration: #" +i)
         var currentToBlock = fromBlock + 5000;
         
         let filter = lottoContract.filters.TicketsPurchase();
@@ -68,6 +67,29 @@ async function main() {
     for (var key in foundAddress) {
         console.log(`Address: ${key}, Count: ${foundAddress[key].length}`)
     }
+
+    console.log(`==== Stats ====`)
+    var stats = {}
+    for (var key in foundAddress) {
+
+        if (!stats[foundAddress[key].length]) {
+            stats[foundAddress[key].length] = 0;
+        }
+        stats[foundAddress[key].length]++
+    }
+
+    var moreThenOne = 0;
+    for (var key in stats) {
+        if (key > 1) {
+            moreThenOne++;
+        }
+        console.log(`Time palys: ${key}, Count: ${stats[key]}`)
+    }
+
+    console.log('======================================================================================================')
+    console.log(`Total: ${founds}, More Then One: ${moreThenOne}, Percentage: ${moreThenOne / founds * 100}%`)
+    console.log('======================================================================================================')
+   
 }
 
 
