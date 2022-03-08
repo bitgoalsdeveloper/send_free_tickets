@@ -30,8 +30,8 @@ async function main() {
         if(!balance) {
             try {
                 console.log(`==== Sending PLT =====`);
-                //var tx = await pltContract.transfer(buyer, AMOUNT);
-                //tx = tx.wait();
+                var tx = await pltContract.transfer(buyer, AMOUNT);
+                tx = tx.wait();
                 await storage.setItem(buyer.toString(), 1);
             } catch(e) {
                 console.log(e)
@@ -46,8 +46,8 @@ async function main() {
         if (!balance) {
             try {
                 console.log(`==== Sending PLT =====`);
-                //var tx = await pltContract.transfer(buyer, AMOUNT);
-                //tx = tx.wait();
+                var tx = await pltContract.transfer(buyer, AMOUNT);
+                tx = tx.wait();
                 await storage.setItem(buyer.toString(), 1);
             } catch (e) {
                 console.log(e)
