@@ -1,7 +1,6 @@
 const { ethers } = require("hardhat");
 const storage = require('node-persist');
-const sleep = require('sleep');
-
+const { sleep } = require("sleep");
 
 const AMOUNT = ethers.utils.parseEther("0.3"); // PLT
 
@@ -25,67 +24,34 @@ async function main() {
     const bnbBalance = await pltContract.provider.getBalance(owner.address)
     console.log(`==== My Balance: ${pltBalance} PLT, ${bnbBalance} BNB, To address: ${owner.address} =====`);
 
-    let filter = pancakeContract.filters.BetBear();
-    pancakeContract.on(filter, async (buyer, epoch, amount) => {
+    pancakeContract.on('BetBear', async (buyer, epoch, amount) => {
         console.log(`==== BetBear event: sender: ${buyer}, epoch: ${epoch}, amount: ${amount} =====`);
-        var balance = await storage.getItem(buyer.toString())
-        if(!balance) {
-            try {
-                console.log(`==== Sending PLT =====`);
-                var tx = await pltContract.transfer(buyer, AMOUNT);
-                tx = await tx.wait();
-                await storage.setItem(buyer.toString(), 1);
-                //sleep.sleep(1)
-            } catch(e) {
-                console.log(e)
-            }
-        }
+        await sendTickets(storage, pltContract, buyer);
+
     });
 
-    filter = pancakeContract.filters.BetBull();
-    pancakeContract.on(filter, async (buyer, epoch, amount) => {
+    pancakeContract.on('BetBull', async (buyer, epoch, amount) => {
         console.log(`==== BetBull event: sender: ${buyer}, epoch: ${epoch}, amount: ${amount} =====`);
-        var balance = await storage.getItem(buyer.toString())
-        if (!balance) {
-            try {
-                console.log(`==== Sending PLT =====`);
-                var tx = await pltContract.transfer(buyer, AMOUNT);
-                tx = await tx.wait();
-                await storage.setItem(buyer.toString(), 1);
-                //sleep.sleep(1)
-            } catch (e) {
-                console.log(e)
-            }
-        }
+        await sendTickets(storage, pltContract, buyer);
     });
     
     console.log(`==== Start listen on: ${pancakeContractAddress} =====`);
 }
 
-// async function getAllEvent(contr) {
-//     let filter = pancakeContract.filters.TicketsPurchase();
-
-//     const events = await pancakeContract.queryFilter({
-//         address: null,
-//         topics: filter
-//     },
-//     15571154, 
-//     "latest")
-
-//     console.log(events[0])
-// }
-
-// async function startListenToEvents(contract) {
-//     let filter = contract.filters.TicketsPurchase();
-//     contract.on(filter, (buyer, lotteryId, numberTickets) => {
-//         console.log(`==== TicketsPurchase event: buyer: ${buyer}, lotteryId: ${lotteryId}, numberTickets: ${numberTickets} =====`);
-//     });
-// }
-
-
-// async function setNFT() {
-
-// }
+async function sendTickets(storage, pltContract, buyer) {
+    var balance = await storage.getItem(buyer.toString())
+    if (!balance) {
+        try {
+            console.log(`==== Sending PLT =====`);
+            var tx = await pltContract.transfer(buyer, AMOUNT);
+            tx = await tx.wait();
+            await storage.setItem(buyer.toString(), 1);
+            sleep(1)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
 
 
 // We recommend this pattern to be able to use async/await everywhere

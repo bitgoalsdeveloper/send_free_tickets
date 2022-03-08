@@ -30,13 +30,13 @@ module.exports = {
     testnet: {
       url: "https://data-seed-prebsc-1-s1.binance.org:8545",
       chainId: 97,
-      gasPrice: 50000000000,
+      gasPrice: 30000000000,
       accounts: [process.env.PRIVATE_KEY],
     },
     mainnet: {
       url: "https://bsc-dataseed.binance.org/",
       chainId: 56,
-      gasPrice: 50000000000,
+      gasPrice: 30000000000,
       accounts: [process.env.PRIVATE_KEY],
     },
   },
