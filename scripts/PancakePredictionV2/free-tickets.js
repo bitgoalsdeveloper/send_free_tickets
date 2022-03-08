@@ -42,13 +42,14 @@ async function sendTickets(storage, pltContract, buyer) {
     var balance = await storage.getItem(buyer.toString())
     if (!balance) {
         try {
-            console.log(`==== Sending PLT =====`);
             var tx = await pltContract.transfer(buyer, AMOUNT);
-            tx = await tx.wait();
+            //tx = await tx.wait();
             await storage.setItem(buyer.toString(), 1);
-            sleep(1)
+            console.log(`==== PLT sent to: ${buyer} =====`);
         } catch (e) {
-            console.log(e)
+            //console.log(e)
+            sleep(10)
+            sendTickets(storage, pltContract, buyer);
         }
     }
 }
