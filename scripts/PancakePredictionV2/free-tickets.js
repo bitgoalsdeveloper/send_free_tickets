@@ -1,5 +1,7 @@
 const { ethers } = require("hardhat");
 const storage = require('node-persist');
+const sleep = require('sleep');
+
 
 const AMOUNT = ethers.utils.parseEther("0.3"); // PLT
 
@@ -31,8 +33,9 @@ async function main() {
             try {
                 console.log(`==== Sending PLT =====`);
                 var tx = await pltContract.transfer(buyer, AMOUNT);
-                tx = tx.wait();
+                tx = await tx.wait();
                 await storage.setItem(buyer.toString(), 1);
+                sleep.sleep(1)
             } catch(e) {
                 console.log(e)
             }
@@ -47,8 +50,9 @@ async function main() {
             try {
                 console.log(`==== Sending PLT =====`);
                 var tx = await pltContract.transfer(buyer, AMOUNT);
-                tx = tx.wait();
+                tx = await tx.wait();
                 await storage.setItem(buyer.toString(), 1);
+                sleep.sleep(1)
             } catch (e) {
                 console.log(e)
             }
