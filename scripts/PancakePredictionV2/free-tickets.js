@@ -35,7 +35,7 @@ async function main() {
                 var tx = await pltContract.transfer(buyer, AMOUNT);
                 tx = await tx.wait();
                 await storage.setItem(buyer.toString(), 1);
-                sleep.sleep(1)
+                //sleep.sleep(1)
             } catch(e) {
                 console.log(e)
             }
@@ -52,7 +52,7 @@ async function main() {
                 var tx = await pltContract.transfer(buyer, AMOUNT);
                 tx = await tx.wait();
                 await storage.setItem(buyer.toString(), 1);
-                sleep.sleep(1)
+                //sleep.sleep(1)
             } catch (e) {
                 console.log(e)
             }
