@@ -1,6 +1,8 @@
 const { ethers } = require("hardhat");
 const storage = require('node-persist');
 const { sleep } = require("sleep");
+const WaitNotify = require('wait-notify');
+const waitNotify = new WaitNotify();
 
 const AMOUNT = ethers.utils.parseEther("0.3"); // PLT
 
@@ -42,18 +44,19 @@ async function sendTickets(storage, pltContract, buyer) {
     var balance = await storage.getItem(buyer.toString())
     if (!balance) {
         try {
-            var tx = await pltContract.transfer(buyer, AMOUNT);
-            //tx = await tx.wait();
+            await sendTicketsAndWait(pltContract, buyer)
             await storage.setItem(buyer.toString(), 1);
             console.log(`==== PLT sent to: ${buyer} =====`);
         } catch (e) {
-            //console.log(e)
-            sleep(10)
-            sendTickets(storage, pltContract, buyer);
+            console.log(e)
         }
     }
 }
 
+async function sendTicketsAndWait(pltContract, buyer) {
+    var tx = await pltContract.transfer(buyer, AMOUNT);
+    tx = await tx.wait();
+}
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
