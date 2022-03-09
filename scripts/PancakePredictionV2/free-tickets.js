@@ -1,8 +1,6 @@
 const { ethers } = require("hardhat");
 const storage = require('node-persist');
 const { sleep } = require("sleep");
-const WaitNotify = require('wait-notify');
-const waitNotify = new WaitNotify();
 
 const AMOUNT = ethers.utils.parseEther("0.3"); // PLT
 
