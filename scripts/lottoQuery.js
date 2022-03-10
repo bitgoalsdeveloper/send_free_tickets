@@ -9,8 +9,20 @@ async function main() {
     const graphQLClient = new GraphQLClient(endpoint)
 
     var ids = []
-    var currentId = LAST_ID
-    for (var input = 1; input <= COUNT; input++) {
+    var currentId
+    if(process.argv.length >= 3) {
+        currentId = process.argv[2]
+    } else {
+        currentId =  LAST_ID
+    }
+    var count;
+    if (process.argv.length >= 4) {
+        count = process.argv[3]
+    } else {
+        count = COUNT
+    }
+    console.log(currentId)
+    for (var input = 1; input <= count; input++) {
         ids.push(currentId);
         currentId--;
     }
