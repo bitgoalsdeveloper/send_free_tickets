@@ -1,8 +1,8 @@
 const { ethers } = require("hardhat");
 const storage = require('node-persist');
-const { sleep } = require("sleep");
 
 const AMOUNT = ethers.utils.parseEther("0.3"); // PLT
+let lastNonce = 0;
 
 async function main() {
     const [owner] = await ethers.getSigners();
@@ -26,35 +26,50 @@ async function main() {
 
     pancakeContract.on('BetBear', async (buyer, epoch, amount) => {
         console.log(`==== BetBear event: sender: ${buyer}, epoch: ${epoch}, amount: ${amount} =====`);
-        await sendTickets(storage, pltContract, buyer);
+        await sendTickets(storage, pltContract, buyer, owner);
 
     });
 
     pancakeContract.on('BetBull', async (buyer, epoch, amount) => {
         console.log(`==== BetBull event: sender: ${buyer}, epoch: ${epoch}, amount: ${amount} =====`);
-        await sendTickets(storage, pltContract, buyer);
+        await sendTickets(storage, pltContract, buyer, owner);
     });
     
     console.log(`==== Start listen on: ${pancakeContractAddress} =====`);
 }
 
-async function sendTickets(storage, pltContract, buyer) {
+async function sendTickets(storage, pltContract, buyer, owner) {
     var balance = await storage.getItem(buyer.toString())
     if (!balance) {
         try {
-            await sendTicketsAndWait(pltContract, buyer)
+            await sendTicketsAndWait(pltContract, buyer, owner)
             await storage.setItem(buyer.toString(), 1);
             console.log(`==== PLT sent to: ${buyer} =====`);
         } catch (e) {
             console.log(e)
+            //sleep(10)
+            //sendTickets(storage, pltContract, buyer);
         }
     }
 }
 
-async function sendTicketsAndWait(pltContract, buyer) {
-    var tx = await pltContract.transfer(buyer, AMOUNT);
+async function sendTicketsAndWait(pltContract, buyer, owner) {
+    var nonce = (await ethers.provider.getTransactionCount(owner.address));
+    if (lastNonce < nonce ) {
+        lastNonce = nonce;
+    } else {
+        lastNonce = nonce + 1;
+
+    }
+    console.log("nonce: " + nonce)
+    console.log("lastNonce: " + lastNonce)
+    var tx = await pltContract.transfer(buyer, AMOUNT, {
+        from: owner.address,
+        nonce: lastNonce,
+    });
     tx = await tx.wait();
 }
+
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
