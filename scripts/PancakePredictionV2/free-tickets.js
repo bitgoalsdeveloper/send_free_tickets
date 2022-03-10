@@ -59,7 +59,6 @@ async function sendTicketsAndWait(pltContract, buyer, owner) {
         lastNonce = nonce;
     } else {
         lastNonce = nonce + 1;
-
     }
     var tx = await pltContract.transfer(buyer, AMOUNT, {
         from: owner.address,
