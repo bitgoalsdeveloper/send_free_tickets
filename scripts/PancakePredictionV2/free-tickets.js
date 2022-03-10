@@ -61,8 +61,6 @@ async function sendTicketsAndWait(pltContract, buyer, owner) {
         lastNonce = nonce + 1;
 
     }
-    console.log("nonce: " + nonce)
-    console.log("lastNonce: " + lastNonce)
     var tx = await pltContract.transfer(buyer, AMOUNT, {
         from: owner.address,
         nonce: lastNonce,
