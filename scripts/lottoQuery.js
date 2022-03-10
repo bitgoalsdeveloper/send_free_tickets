@@ -21,7 +21,6 @@ async function main() {
     } else {
         count = COUNT
     }
-    console.log(currentId)
     for (var input = 1; input <= count; input++) {
         ids.push(currentId);
         currentId--;
@@ -44,11 +43,20 @@ async function main() {
   `
     const data = await graphQLClient.request(mutation)
 
+    var totalUsers = 0;
+    var totalTickets = 0;
+
     console.log('======================================================================================================')
     data.lotteries.map((lottery) => {
+        totalUsers += parseInt(lottery.totalUsers);
+        totalTickets += parseInt(lottery.totalTickets);
         console.log(`Lottery Id: ${lottery.id}, TotalUsers: ${lottery.totalUsers}, TotalTickets: ${lottery.totalTickets}, Status: ${lottery.status}`)
     }) 
     console.log('======================================================================================================')
+    console.log(`Avg totalUsers: ${totalUsers / data.lotteries.length}, Avg TotalTickets: ${totalTickets / data.lotteries.length}`)
+    console.log('======================================================================================================')
+
+
 
 }
 
