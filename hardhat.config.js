@@ -1,6 +1,11 @@
 require("dotenv").config();
 
 require("@nomiclabs/hardhat-waffle");
+require("@nomiclabs/hardhat-web3");
+
+require("./tasks/stats/check-if-played-tickets");
+require("./tasks/stats/check-if-sell");
+require("./tasks/stats/print-lotto-stats");
 
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   const accounts = await hre.ethers.getSigners();
