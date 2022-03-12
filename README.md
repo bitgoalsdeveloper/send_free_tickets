@@ -16,3 +16,6 @@
     npx hardhat check-if-sell --tag prediction-v2-scanner --network mainnet
     npx hardhat print-lotto-status --id 1484 --count 40
 ```
+
+## Tags
+lotto-scanner,prediction-v2-scanner
