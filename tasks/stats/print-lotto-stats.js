@@ -1,5 +1,6 @@
 const { GraphQLClient, gql } = require('graphql-request');
 
+const COUNT = 40;
 const endpoint = 'https://api.thegraph.com/subgraphs/name/bitgoalsdeveloper/poollottoprod'
 
 async function main(lastId, count) {
