@@ -6,7 +6,7 @@ const logger = require("../../utils/logger.js")
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
-const FROM_BLOCK = 15953767;
+const FROM_BLOCK = 15706768;
 
 async function main(tag, fromBlock) {
     const [owner] = await ethers.getSigners();

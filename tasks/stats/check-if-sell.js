@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const { add } = require('mongoose/lib/helpers/specialProperties');
 const User = mongoose.model('User');
 
-const FROM_BLOCK = 15974725;
+const FROM_BLOCK = 15706768;
 
 async function main(tag, fromBlock) {
     const [owner] = await ethers.getSigners();
