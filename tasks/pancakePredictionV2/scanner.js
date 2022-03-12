@@ -37,7 +37,7 @@ class PancakePredictionV2ScannerTask {
 
         let user = new User({
             address: buyer,
-            need_to_send: true,
+            erc20_sent: false,
             tag: "prediction-v2-scanner"
         });
 

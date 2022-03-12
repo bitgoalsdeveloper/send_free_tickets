@@ -15,7 +15,7 @@ class SendERC20Task {
 
         const [owner] = await ethers.getSigners();
 
-        var users = await User.find({'need_to_send': true}, {});
+        var users = await User.find({'erc20_sent': false}, {});
 
         const pltSmallContractABI = ['function transfer(address recipient, uint256 amount) external returns (bool)',
             'function balanceOf(address account) external view returns (uint256)'
@@ -33,7 +33,7 @@ class SendERC20Task {
                 var now = new Date();
                 const filter = { address: user.address };
                 const update = {
-                   need_to_send: false,
+                   erc20_sent: true,
                    updated_at: now
                 };
 

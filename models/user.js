@@ -17,7 +17,7 @@ const userSchema = new Schema({
     address: {},
     tag: {},
     comment: {},
-    need_to_send: {},
+    erc20_sent: {},
     created_at: { type: Date },
     updated_at: { type: Date }
 

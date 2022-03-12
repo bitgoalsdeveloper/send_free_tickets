@@ -25,7 +25,7 @@ class PancakeLottoScannerTask {
 
             let user = new User({
                 address: buyer,
-                need_to_send: true,
+                erc20_sent: false,
                 tag: "lotto-scanner"
             });
 

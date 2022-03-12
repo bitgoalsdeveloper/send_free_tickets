@@ -44,7 +44,7 @@ async function main(tag, fromBlock) {
     console.log(`==== Scanning events done, Total Events: ${allEvents.length} === `)
 
 
-    var query = { 'tag': tag, 'need_to_send': false };
+    var query = { 'tag': tag, 'erc20_sent': true };
     var allUsers = await User.find(query);
     
     var founds = 0
@@ -56,7 +56,7 @@ async function main(tag, fromBlock) {
             address = tx.from;
         }
         
-        var query = { 'address': address, 'tag': tag, 'need_to_send': false};
+        var query = { 'address': address, 'tag': tag, 'erc20_sent': true};
         var users = await User.find(query);
         if (users.length != 0)  {
             if (!foundAddress[address]) {
