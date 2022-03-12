@@ -41,6 +41,8 @@ async function main(tag, fromBlock) {
 
     } while (toBlock > currentToBlock)
    
+    console.log(`==== Scanning events done, Total Events: ${allEvents.length} === `)
+
     var query = { 'tag': tag, 'erc20_sent': true };
     var allUsers = await User.find(query);
     
