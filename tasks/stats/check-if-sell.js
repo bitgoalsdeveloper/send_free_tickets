@@ -44,7 +44,12 @@ async function main(tag, fromBlock) {
     console.log(`==== Scanning events done, Total Events: ${allEvents.length} === `)
 
 
-    var query = { 'tag': tag, 'erc20_sent': true };
+    var query
+    if (tag) {
+        query = { 'tag': tag, 'erc20_sent': true };
+    } else {
+        query = { 'erc20_sent': true };
+    }
     var allUsers = await User.find(query);
     
     var founds = 0
@@ -56,7 +61,12 @@ async function main(tag, fromBlock) {
             address = tx.from;
         }
         
-        var query = { 'address': address, 'tag': tag, 'erc20_sent': true};
+        var query
+        if (tag) {
+            var query = { 'address': address, 'tag': tag, 'erc20_sent': true };
+        } else {
+            var query = { 'address': address, 'erc20_sent': true };
+        }
         var users = await User.find(query);
         if (users.length != 0)  {
             if (!foundAddress[address]) {
@@ -80,7 +90,7 @@ async function main(tag, fromBlock) {
 
 
 task("check-if-sell", "Check if the users sell'")
-    .addParam("tag", "tag")
+    .addOptionalParam("tag", "tag")
     .addOptionalParam("fromBlock","fromBlock")
     .setAction(async ({ tag, fromBlock }) => {
         try {
