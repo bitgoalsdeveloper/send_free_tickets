@@ -79,7 +79,7 @@ async function main(tag, fromBlock) {
     };
 
     console.log('======================================================================================================')
-    console.log(`Total: ${allUsers.length}, Found: ${founds}, Percentage: ${founds / allUsers.length * 100}%`)
+    console.log(`Total: ${allUsers.length}, Found: ${founds}, Percentage: ${(founds / allUsers.length * 100).toFixed(2)}%`)
     console.log('======================================================================================================')
 
     console.log(`==== Results ====`)

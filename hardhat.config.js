@@ -7,6 +7,7 @@ require("./tasks/stats/check-if-played-tickets");
 require("./tasks/stats/check-if-sell");
 require("./tasks/stats/print-lotto-stats");
 require("./tasks/stats/import");
+require("./tasks/erc20/sendErc20");
 
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   const accounts = await hre.ethers.getSigners();
