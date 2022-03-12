@@ -9,9 +9,6 @@ async function main() {
     var pancakePredictionV2Scanner = new PancakePredictionV2ScannerTask();
     var sendERC20Task = new SendERC20Task();
 
-    await sendERC20Task.run()
-
-    // run scanners
     pancakeLottoScanner.run();
     pancakePredictionV2Scanner.run();
 
