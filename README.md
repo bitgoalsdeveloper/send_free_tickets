@@ -12,7 +12,7 @@
 ```
 ## How to run tasks
 ```
-    npx hardhat check-if-played-tickets --tag pancakePredictionV2Scanner --network mainnet
-    npx hardhat check-if-sell --tag pancakePredictionV2Scanner --network mainnet
+    npx hardhat check-if-played-tickets --tag prediction-v2-scanner --network mainnet
+    npx hardhat check-if-sell --tag prediction-v2-scanner --network mainnet
     npx hardhat print-lotto-status --id 1484 --count 40
 ```
