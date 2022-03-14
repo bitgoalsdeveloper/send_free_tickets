@@ -109,3 +109,5 @@ dist
 cache/
 persist/
 persist_PancakePredictionV2/
+
+.DS_Store
