@@ -37,11 +37,16 @@ class SendERC20Task {
             amountToSent.push(AMOUNT);
         })
 
+        if(addressesToSent.length == 0) {
+            console.log("No Address to sent");
+            return;
+        }
+
         try {
             var tx = await airDropContract.send(pltContract.address, addressesToSent, amountToSent);
             tx = await tx.wait();
 
-            logger.info(`==== PLT Sent Count:${addressesToSent.length}, URL: https://bscscan.com/tx/${tx.hash} =====`);
+            logger.info(`==== PLT Sent Count:${addressesToSent.length}, URL: https://bscscan.com/tx/${tx.transactionHash} =====`);
         } catch(e) {
             console.log(e);
         }
@@ -67,6 +72,7 @@ class SendERC20Task {
             } catch (e) {
                 console.log(e)
             }
+            // logger.info(`==== Updade address ${user.address} =====`);
         }
     }
 }
