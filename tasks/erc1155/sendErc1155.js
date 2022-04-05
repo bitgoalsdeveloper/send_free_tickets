@@ -13,6 +13,8 @@ class SendERC1155Task {
         await mongoose.connect(process.env.MONGO_DB);
 
         const [owner] = await ethers.getSigners();
+        
+        logger.info(`==== Owner: ${owner.address} =====`)
 
         const nftPltSmallContractABI = [
             'function safeTransferFrom(address from, address to, uint256 id, uint256 amount,bytes memory data)',
