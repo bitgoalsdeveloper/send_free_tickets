@@ -18,6 +18,7 @@ const userSchema = new Schema({
     tag: {},
     comment: {},
     erc20_sent: {},
+    erc1155_sent: {},
     created_at: { type: Date },
     updated_at: { type: Date }
 

@@ -1,4 +1,5 @@
 const SendERC20Task = require('./erc20/sendErc20.js');
+const SendERC1155Task = require('./erc1155/sendErc1155.js');
 const PancakePredictionV2ScannerTask = require('./pancakePredictionV2/scanner');
 const PancakeLottoScannerTask = require('./pancakeLotto/scanner');
 var cron = require('node-cron');
@@ -7,13 +8,14 @@ var cron = require('node-cron');
 async function main() {
     var pancakeLottoScanner = new PancakeLottoScannerTask();
     var pancakePredictionV2Scanner = new PancakePredictionV2ScannerTask();
-    var sendERC20Task = new SendERC20Task();
+    var sendERC1155Task = new SendERC1155Task();
 
     pancakeLottoScanner.run();
     pancakePredictionV2Scanner.run();
 
     cron.schedule('*/5 * * * *', () => {
-        sendERC20Task.run()
+        //sendERC20Task.run()
+        sendERC1155Task.run()
     });
 }
 

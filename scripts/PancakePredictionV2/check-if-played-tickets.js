@@ -3,7 +3,6 @@ const storage = require('node-persist');
 const ervy = require('ervy')
 const { bar } = ervy
 
-
 const FROM_BLOCK = 15856625 ;
 
 async function main() {
