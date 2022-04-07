@@ -45,9 +45,9 @@ async function main(tag, fromBlock) {
 
     var query
     if(tag) {
-        query = { 'tag': tag, 'erc20_sent': true };
+        query = { 'tag': tag, 'erc1155_sent': true };
     } else {
-        query = { 'erc20_sent': true };
+        query = { 'erc1155_sent': true };
     }
     
     var allUsers = await User.find(query);
