@@ -6,15 +6,15 @@ const logger = require("../../utils/logger.js")
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
-const FROM_BLOCK = 16718700;
+const FROM_BLOCK = 15706768;
 
 async function main(tag, fromBlock) {
     const [owner] = await ethers.getSigners();
     console.log(`==== Running =====`);
     await mongoose.connect(process.env.MONGO_DB);
     
-    const lottoSmallContractABI = ['event TicketsPurchase(address indexed buyer, uint256 indexed lotteryId, uint256 numberTickets, uint256 amountPLTToTransfer, uint256 amountNftToTransfer, string affiliateId)'];
-    const lottoContractAddress = '0x0b728b04cD452a0fFD0c1246338ADD09582e8DDB';
+    const lottoSmallContractABI = ['event TicketsPurchase(address indexed buyer, uint256 indexed lotteryId, uint256 numberTickets)'];
+    const lottoContractAddress = '0x6420069F636b86e3fa9D06a5B6AB8d9203e00436';
     const lottoContract = await ethers.getContractAt(lottoSmallContractABI, lottoContractAddress, owner);
 
     if (!fromBlock) {

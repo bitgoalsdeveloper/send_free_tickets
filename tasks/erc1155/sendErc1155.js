@@ -38,7 +38,7 @@ class SendERC1155Task {
     
                 logger.info(`==== PLT NFT Sent to:${user.address}, URL: https://bscscan.com/tx/${tx.transactionHash} =====`);
             } catch(e) {
-                console.log(e);
+                //console.log(e);
                 continue;
             }
 
