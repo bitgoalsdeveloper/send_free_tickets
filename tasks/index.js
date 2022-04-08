@@ -13,7 +13,7 @@ async function main() {
     pancakeLottoScanner.run();
     pancakePredictionV2Scanner.run();
 
-    cron.schedule('*/5 * * * *', () => {
+    cron.schedule('*/10 * * * *', () => {
         //sendERC20Task.run()
         sendERC1155Task.run()
     });

@@ -38,6 +38,7 @@ class PancakePredictionV2ScannerTask {
         let user = new User({
             address: buyer,
             erc20_sent: false,
+            erc1155_sent: false,
             tag: "prediction-v2-scanner"
         });
 
@@ -46,7 +47,7 @@ class PancakePredictionV2ScannerTask {
             await user.save();
             logger.info(`==== added: ${buyer} =====`);
         } else {
-            logger.info(`==== buyer alreay exists: ${buyer} =====`);
+            // logger.info(`==== buyer alreay exists: ${buyer} =====`);
         }
     }
 }

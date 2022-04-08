@@ -84,10 +84,10 @@ class SendERC1155Task {
     
 }
 
-task("send-plt", "Send Plt if needed")
+task("send-nft-plt", "Send Plt if needed")
     .setAction(async () => {
         try {
-            await (new SendERC20Task()).run()
+            await (new SendERC1155Task()).run()
         } catch (e) {
             console.log(e)
         }
