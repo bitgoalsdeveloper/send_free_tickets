@@ -19,6 +19,12 @@ async function main() {
     });
 }
 
+
+// async function main() {
+//     var sendERC1155Task = new SendERC1155Task();
+//     sendERC1155Task.run()
+// }
+
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main()

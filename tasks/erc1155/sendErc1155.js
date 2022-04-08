@@ -50,7 +50,7 @@ class SendERC1155Task {
             var tx = await multiSenderContract.sendERC1155(nftPltContract.address, addressesToSent, amountsToSent, idsToSent);
             tx = await tx.wait();
 
-            logger.info(`==== PLT NFT Sent Count:${addressesToSent.length}, URL: https://bscscan.com/tx/${tx.transactionHash} =====`);
+            logger.info(`==== PLT NFT Sent Count: ${addressesToSent.length}, URL: https://bscscan.com/tx/${tx.transactionHash} =====`);
         } catch(e) {
             console.log(e);
         }

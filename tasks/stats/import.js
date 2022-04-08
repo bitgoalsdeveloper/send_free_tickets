@@ -4,16 +4,20 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const storage = require('node-persist');
 
+
+var data = [
+   ]
+
+
 async function main() {
     logger.info(`==== Running Import Taks =====`)
     await mongoose.connect(process.env.MONGO_DB);
     await storage.init({ dir: './persist_PancakePredictionV2', });
 
-    const addressList = await storage.keys();
+    
+    for (const address of data) {
 
-    for (const buyer of addressList) {
-
-       // var query = { 'address': buyer };
+        var query = { 'address': address.address };
 
         // let user = new User({
         //     address: buyer,
@@ -22,21 +26,24 @@ async function main() {
         // });
 
         let user = new User({
-            address: buyer,
-            erc20_sent: true,
-            tag: "prediction-v2-scanner"
+            address: address.address,
+            erc20_sent: false,
+            erc1155_sent: false,
+            tag: "marketing"
         });
 
         var users = await User.find(query);
         if (users.length == 0) {
             await user.save();
-            logger.info(`==== added: ${buyer} =====`);
+            logger.info(`==== added: ${address.address} =====`);
         }
     }
     
+    logger.info(`==== DONE =====`);
+
 }
 
-task("importdb", "impoty'")
+task("importdb", "impot'")
     .setAction(async ({ }) => {
         try {
             await main();
