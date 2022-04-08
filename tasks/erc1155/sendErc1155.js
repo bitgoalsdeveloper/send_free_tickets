@@ -22,25 +22,40 @@ class SendERC1155Task {
         const nftPltContractAddress = '0x728b8500f88Fb9239e9746871CE6A6430B7d0EBe';
         const nftPltContract = await ethers.getContractAt(nftPltSmallContractABI, nftPltContractAddress, owner);
 
-        var users = await User.find({ 'erc1155_sent': false }, {});
+        const multiSenderSmallContractABI = ['function sendERC1155(address token, address[] calldata addresses, uint256 [] calldata values, uint256 [] calldata ids) external returns (uint256)'];
+        const multiSenderContractAddress = '0xE65b3A98c684b51167178342b04F1E15eA7aFc7F';
+        const multiSenderContract = await ethers.getContractAt(multiSenderSmallContractABI, multiSenderContractAddress, owner);
+
+        var totalusers = await User.find({ 'erc1155_sent': false }, {})
+        logger.info(`==== Total Users to send count: ${totalusers.length} =====`);
+
+        var users = await User.find({ 'erc1155_sent': false }, {}).limit(500);
         logger.info(`==== Users to send count: ${users.length} =====`);
 
-        if(users.length == 0) {
+        var addressesToSent = [];
+        var amountsToSent = [];
+        var idsToSent = [];
+        users.map(user => {
+            addressesToSent.push(user.address);
+            amountsToSent.push(1);
+            idsToSent.push(1);
+        })
+
+        if(addressesToSent.length == 0) {
             console.log("No Address to sent");
             return;
         }
 
-        for (let user of users) {
+        try {
+            var tx = await multiSenderContract.sendERC1155(nftPltContract.address, addressesToSent, amountsToSent, idsToSent);
+            tx = await tx.wait();
 
-            try {
-                var tx = await nftPltContract.safeTransferFrom(owner.address, user.address, 1, 1, ethers.utils.formatBytes32String(""));
-                tx = await tx.wait();
-    
-                logger.info(`==== PLT NFT Sent to:${user.address}, URL: https://bscscan.com/tx/${tx.transactionHash} =====`);
-            } catch(e) {
-                //console.log(e);
-                continue;
-            }
+            logger.info(`==== PLT NFT Sent Count:${addressesToSent.length}, URL: https://bscscan.com/tx/${tx.transactionHash} =====`);
+        } catch(e) {
+            console.log(e);
+        }
+
+        for (let user of users) {
 
             try {
                 var now = new Date();
@@ -62,6 +77,9 @@ class SendERC1155Task {
                 console.log(e)
             }
         }
+
+        logger.info(`==== Sent DONE =====`);
+
     }
     
 }

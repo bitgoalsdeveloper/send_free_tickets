@@ -1,8 +1,8 @@
 const { GraphQLClient, gql } = require('graphql-request');
 
 const COUNT = 40;
-const endpoint = 'https://api.thegraph.com/subgraphs/name/bitgoalsdeveloper/pltlotto1_1_prod'
-
+//const endpoint = 'https://api.thegraph.com/subgraphs/name/bitgoalsdeveloper/pltlotto1_1_prod'
+const endpoint = 'https://api.thegraph.com/subgraphs/id/QmddSPGbjQrWfmSA9cqtpE5nAH4C8WGiDhRDp82hpAPgjj'
 async function main(lastId, count) {
 
     const graphQLClient = new GraphQLClient(endpoint)
@@ -34,23 +34,28 @@ async function main(lastId, count) {
             id
             totalUsers
             totalTickets
+            totalTicketsNFT
             status
         }
     }
   `
     const data = await graphQLClient.request(mutation)
-
+    data.lotteries.sort(function(a, b) {
+        return Number(a.id) - Number(b.id);
+      })
     var totalUsers = 0;
     var totalTickets = 0;
+    var totalTicketsNFT = 0
 
     console.log('======================================================================================================')
     data.lotteries.map((lottery) => {
         totalUsers += parseInt(lottery.totalUsers);
         totalTickets += parseInt(lottery.totalTickets);
-        console.log(`Lottery Id: ${lottery.id}, TotalUsers: ${lottery.totalUsers}, TotalTickets: ${lottery.totalTickets}, Status: ${lottery.status}`)
+        totalTicketsNFT += parseInt(lottery.totalTicketsNFT);
+        console.log(`Lottery Id: ${lottery.id}, TotalUsers: ${lottery.totalUsers}, TotalTickets: ${lottery.totalTickets}, TotalTicketsNFT: ${lottery.totalTicketsNFT}, Status: ${lottery.status}`)
     }) 
     console.log('======================================================================================================')
-    console.log(`Avg TotalUsers: ${(totalUsers / data.lotteries.length).toFixed(2)}, Avg TotalTickets: ${(totalTickets / data.lotteries.length).toFixed(2)}, Total: ${data.lotteries.length}`)
+    console.log(`Avg TotalUsers: ${(totalUsers / data.lotteries.length).toFixed(2)}, Avg TotalTickets: ${(totalTickets / data.lotteries.length).toFixed(2)}, Avg TotalTicketsNFT: ${(totalTicketsNFT / data.lotteries.length).toFixed(2)}, Total: ${data.lotteries.length}`)
     console.log('======================================================================================================')
 }
 
