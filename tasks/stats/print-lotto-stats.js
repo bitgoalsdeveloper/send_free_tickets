@@ -2,6 +2,8 @@ const { GraphQLClient, gql } = require('graphql-request');
 
 const COUNT = 40;
 const endpoint = 'https://api.thegraph.com/subgraphs/name/bitgoalsdeveloper/pltlotto1_1_prod'
+//const endpoint = 'https://api.thegraph.com/subgraphs/name/pancakeswap/lottery'
+
 async function main(lastId, count) {
 
     const graphQLClient = new GraphQLClient(endpoint)
