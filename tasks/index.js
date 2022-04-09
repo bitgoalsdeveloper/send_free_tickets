@@ -13,17 +13,11 @@ async function main() {
     pancakeLottoScanner.run();
     pancakePredictionV2Scanner.run();
 
-    cron.schedule('*/10 * * * *', () => {
+    cron.schedule('0 * * * *', () => {
         //sendERC20Task.run()
         sendERC1155Task.run()
     });
 }
-
-
-// async function main() {
-//     var sendERC1155Task = new SendERC1155Task();
-//     sendERC1155Task.run()
-// }
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
