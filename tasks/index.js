@@ -1,20 +1,21 @@
-const SendERC20Task = require('./erc20/sendErc20.js');
 const SendERC1155Task = require('./erc1155/sendErc1155.js');
-const PancakePredictionV2ScannerTask = require('./pancakePredictionV2/scanner');
-const PancakeLottoScannerTask = require('./pancakeLotto/scanner');
-var cron = require('node-cron');
+const PancakePredictionV2ScannerTask = require('./scanner/pancakePredictionV2Scanner');
+const PancakeLottoScannerTask = require('./scanner/pancakeLottoScanner');
+const ERC20Scanner = require('./scanner/ERC20Scanner');
 
+var cron = require('node-cron');
 
 async function main() {
     var pancakeLottoScanner = new PancakeLottoScannerTask();
     var pancakePredictionV2Scanner = new PancakePredictionV2ScannerTask();
     var sendERC1155Task = new SendERC1155Task();
+    var erc20Scanner = new ERC20Scanner();
 
     pancakeLottoScanner.run();
     pancakePredictionV2Scanner.run();
+    erc20Scanner.run("0x2cD96e8C3FF6b5E01169F6E3b61D28204E7810Bb"); // LuckyBlock - https://bscscan.com/address/0x2cD96e8C3FF6b5E01169F6E3b61D28204E7810Bb#code
 
     cron.schedule('0 * * * *', () => {
-        //sendERC20Task.run()
         sendERC1155Task.run()
     });
 }
