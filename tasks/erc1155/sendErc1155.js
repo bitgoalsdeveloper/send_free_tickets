@@ -53,6 +53,7 @@ class SendERC1155Task {
             logger.info(`==== PLT NFT Sent Count: ${addressesToSent.length}, URL: https://bscscan.com/tx/${tx.transactionHash} =====`);
         } catch(e) {
             console.log(e);
+            return;
         }
 
         for (let user of users) {
