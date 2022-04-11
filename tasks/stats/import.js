@@ -14,22 +14,31 @@ async function main() {
     await mongoose.connect(process.env.MONGO_DB);
     await storage.init({ dir: './persist_PancakePredictionV2', });
 
-    var users = await User.find( { erc1155_sent: true}, {});
+    var query = {'tag': 'erc20'};
+
+    var users = await User.find( query);
     logger.info(`==== Users to send count: ${users.length} =====`);
 
     for (let user of users) {
         try {
-            var query = {'address': user.address};
-            var users = await User.find(query);
-            if (users.length > 1) {
-                logger.info(`==== found dup: ${buyer} =====`);
-            }
+            var query = {'tag': 'erc20'};
+            const filter = { address: user.address };
+            const update = {
+               tag: 'LuckyBlock'
+            };
 
+            // `doc` is the document _before_ `update` was applied
+            let doc = await User.findOneAndUpdate(filter, update, {
+                returnNewDocument: true,
+                new: true,
+                strict: false
+            });
+        
         } catch (e) {
             console.log(e)
         }
     }
-
+    console.log("DONE")
     return;
     
     for (const address of data) {

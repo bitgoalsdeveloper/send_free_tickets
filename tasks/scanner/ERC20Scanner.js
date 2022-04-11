@@ -7,7 +7,7 @@ const User = mongoose.model('User');
 
 class ERC20Scanner {
 
-    async run(address) {
+    async run(address, tag) {
         logger.info(`==== Running ERC20Scanner Task =====`)
         await mongoose.connect(process.env.MONGO_DB);
 
@@ -20,21 +20,21 @@ class ERC20Scanner {
 
         erc20Contract.on('Transfer', async (from, to, value) => {
             logger.info(`==== Transfer event: from: ${from}, to: ${to}, value: ${value} =====`);
-            await this.saveUser(from);
-            await this.saveUser(to);
+            await this.saveUser(from, tag);
+            await this.saveUser(to, tag);
         });
 
         logger.info(`==== Start listen erc20 on: ${address} =====`);
     }
 
-    async saveUser(address) {
+    async saveUser(address, tag) {
         var query = { 'address': address };
 
         let user = new User({
             address: address,
             erc20_sent: false,
             erc1155_sent: false,
-            tag: "erc20"
+            tag: tag
         });
 
         var users = await User.find(query);

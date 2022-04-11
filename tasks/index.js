@@ -13,7 +13,7 @@ async function main() {
 
     pancakeLottoScanner.run();
     pancakePredictionV2Scanner.run();
-    erc20Scanner.run("0x2cD96e8C3FF6b5E01169F6E3b61D28204E7810Bb"); // LuckyBlock - https://bscscan.com/address/0x2cD96e8C3FF6b5E01169F6E3b61D28204E7810Bb#code
+    erc20Scanner.run("0x2cD96e8C3FF6b5E01169F6E3b61D28204E7810Bb",'LuckyBlock'); // LuckyBlock - https://bscscan.com/address/0x2cD96e8C3FF6b5E01169F6E3b61D28204E7810Bb#code
 
     cron.schedule('0 * * * *', () => {
         sendERC1155Task.run()
