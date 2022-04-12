@@ -16,15 +16,14 @@ async function main() {
 
     var query = {'tag': 'erc20'};
 
-    var users = await User.find( query);
+    var users = await User.find({'erc1155_sent': true}).sort({created_at: -1}).limit(150);
     logger.info(`==== Users to send count: ${users.length} =====`);
 
     for (let user of users) {
         try {
-            var query = {'tag': 'erc20'};
             const filter = { address: user.address };
             const update = {
-               tag: 'LuckyBlock'
+                erc1155_sent: false
             };
 
             // `doc` is the document _before_ `update` was applied

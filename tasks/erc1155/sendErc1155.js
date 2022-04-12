@@ -30,16 +30,23 @@ class SendERC1155Task {
         logger.info(`==== Total Users to send count: ${totalusers.length} =====`);
 
         var users = await User.find({ 'erc1155_sent': false }, {}).limit(500);
-        logger.info(`==== Users to send count: ${users.length} =====`);
 
         var addressesToSent = [];
         var amountsToSent = [];
-        var idsToSent = [];
-        users.map(user => {
-            addressesToSent.push(user.address);
-            amountsToSent.push(1);
-            idsToSent.push(1);
-        })
+        var idsToSent = []; 
+        for (let user of users) {
+            var res = await multiSenderContract.provider.getCode(user.address)
+            if(res == '0x') { // filter out contracts 
+                addressesToSent.push(user.address);
+                amountsToSent.push(1);
+                idsToSent.push(1);
+            } else {
+                logger.info(`Address is a contract - ${user.address}`);
+
+            }
+        }
+
+        logger.info(`==== Users to send count: ${addressesToSent.length} =====`);
 
         if(addressesToSent.length == 0) {
             console.log("No Address to sent");

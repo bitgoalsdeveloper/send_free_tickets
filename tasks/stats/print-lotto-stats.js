@@ -55,9 +55,13 @@ async function main(lastId, count) {
         totalTicketsNFT += parseInt(lottery.totalTicketsNFT);
         console.log(`Lottery Id: ${lottery.id}, TotalUsers: ${lottery.totalUsers}, TotalTickets: ${lottery.totalTickets}, TotalTicketsNFT: ${lottery.totalTicketsNFT}, Status: ${lottery.status}`)
     }) 
-    console.log('======================================================================================================')
-    console.log(`Avg TotalUsers: ${(totalUsers / data.lotteries.length).toFixed(2)}, Avg TotalTickets: ${(totalTickets / data.lotteries.length).toFixed(2)}, Avg TotalTicketsNFT: ${(totalTicketsNFT / data.lotteries.length).toFixed(2)}, Total: ${data.lotteries.length}`)
-    console.log('======================================================================================================')
+    console.log(`======================================================================================================
+        Avg TotalUsers: ${(totalUsers / data.lotteries.length).toFixed(2)}, 
+        Avg TotalTickets: ${(totalTickets / data.lotteries.length).toFixed(2)}, 
+        Avg TotalTicketsNFT: ${(totalTicketsNFT / data.lotteries.length).toFixed(2)}, 
+        Avg NFTPerTicktes: ${(totalTicketsNFT / totalTickets * 100).toFixed(2)}%, 
+        Total: ${data.lotteries.length}
+======================================================================================================`)
 }
 
 
