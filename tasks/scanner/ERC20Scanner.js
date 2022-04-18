@@ -19,7 +19,7 @@ class ERC20Scanner {
         const erc20Contract = await ethers.getContractAt(erc20SmallContractABI, address, owner);
 
         erc20Contract.on('Transfer', async (from, to, value) => {
-            logger.info(`==== Transfer event: from: ${from}, to: ${to}, value: ${value} =====`);
+            // logger.info(`==== Transfer event: from: ${from}, to: ${to}, value: ${value} =====`);
             await this.saveUser(from, tag, erc20Contract.provider);
             await this.saveUser(to, tag, erc20Contract.provider);
         });
@@ -31,7 +31,7 @@ class ERC20Scanner {
 
         var res = await provider.getCode(address)
         if(res != '0x') {
-            logger.info(`Address is a contract - ${address}`);
+            //logger.info(`Address is a contract - ${address}`);
             return;
         }
 
@@ -51,7 +51,7 @@ class ERC20Scanner {
             } catch (e) {
             }
             
-            logger.info(`==== added: ${address} =====`);
+            logger.info(`==== added: ${address} , tag: ${tag} =====`);
         }
     }
 }

@@ -19,13 +19,13 @@ class PancakePredictionV2ScannerTask {
         const pancakeContract = await ethers.getContractAt(pancakeSmallContractABI, pancakeContractAddress, owner);
 
         pancakeContract.on('BetBear', async (buyer, epoch, amount) => {
-            logger.info(`==== BetBear event: sender: ${buyer}, epoch: ${epoch}, amount: ${amount} =====`);
+            // logger.info(`==== BetBear event: sender: ${buyer}, epoch: ${epoch}, amount: ${amount} =====`);
             await this.saveUser(buyer);
 
         });
 
         pancakeContract.on('BetBull', async (buyer, epoch, amount) => {
-            logger.info(`==== BetBull event: sender: ${buyer}, epoch: ${epoch}, amount: ${amount} =====`);
+            // logger.info(`==== BetBull event: sender: ${buyer}, epoch: ${epoch}, amount: ${amount} =====`);
             await this.saveUser(buyer);
         });
 
@@ -45,7 +45,8 @@ class PancakePredictionV2ScannerTask {
         var users = await User.find(query);
         if (users.length == 0) {
             await user.save();
-            logger.info(`==== added: ${buyer} =====`);
+            logger.info(`==== added: ${buyer} , tag: prediction-v2-scanner =====`);
+
         } else {
             // logger.info(`==== buyer alreay exists: ${buyer} =====`);
         }

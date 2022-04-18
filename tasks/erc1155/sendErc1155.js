@@ -13,7 +13,7 @@ class SendERC1155Task {
         await mongoose.connect(process.env.MONGO_DB);
 
         const [owner] = await ethers.getSigners();
-        
+
         logger.info(`==== Owner: ${owner.address} =====`)
 
         const nftPltSmallContractABI = [
@@ -29,21 +29,27 @@ class SendERC1155Task {
         var totalusers = await User.find({ 'erc1155_sent': false }, {})
         logger.info(`==== Total Users to send count: ${totalusers.length} =====`);
 
-        var users = await User.find({ 'erc1155_sent': false }, {}).limit(500);
+        var users = await User.find({ 'erc1155_sent': false }, {}).limit(700);
 
         var addressesToSent = [];
         var amountsToSent = [];
-        var idsToSent = []; 
+        var idsToSent = [];
         for (let user of users) {
-            var res = await multiSenderContract.provider.getCode(user.address)
-            if(res == '0x') { // filter out contracts 
-                addressesToSent.push(user.address);
-                amountsToSent.push(1);
-                idsToSent.push(1);
-            } else {
-                logger.info(`Address is a contract - ${user.address}`);
-
+            var address = user.address.trim();
+            if(!ethers.utils.isAddress(address)) {
+                console.log(`Not address ${address}`)
+                continue;
             }
+            // var res = await multiSenderContract.provider.getCode(address)
+            // if(res != '0x') {
+            //     console.log(`address is contract - ${address}`)
+            //     continue;
+            // }
+
+            addressesToSent.push(address);
+            amountsToSent.push(1);
+            idsToSent.push(1);
+
         }
 
         logger.info(`==== Users to send count: ${addressesToSent.length} =====`);
@@ -89,7 +95,7 @@ class SendERC1155Task {
         logger.info(`==== Sent DONE =====`);
 
     }
-    
+
 }
 
 task("send-nft-plt", "Send Plt if needed")

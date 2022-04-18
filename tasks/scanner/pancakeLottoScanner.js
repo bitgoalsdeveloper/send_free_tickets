@@ -19,7 +19,7 @@ class PancakeLottoScannerTask {
 
         let filter = pancakeContract.filters.TicketsPurchase();
         pancakeContract.on(filter, async (buyer, lotteryId, numberTickets) => {
-            logger.info(`==== TicketsPurchase event: buyer: ${buyer}, lotteryId: ${lotteryId}, numberTickets: ${numberTickets} =====`);
+            // logger.info(`==== TicketsPurchase event: buyer: ${buyer}, lotteryId: ${lotteryId}, numberTickets: ${numberTickets} =====`);
 
             var query = {'address': buyer};
 
@@ -33,7 +33,7 @@ class PancakeLottoScannerTask {
             var users = await User.find(query);
             if (users.length == 0) {
                 await user.save();
-                logger.info(`==== added: ${buyer} =====`);
+                logger.info(`==== added: ${buyer} , tag: lotto-scanner =====`);
             }
            
         });
