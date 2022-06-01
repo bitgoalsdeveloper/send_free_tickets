@@ -15,6 +15,7 @@
     npx hardhat check-if-played-tickets --tag prediction-v2-scanner --network mainnet
     npx hardhat check-if-sell --tag prediction-v2-scanner --network mainnet
     npx hardhat print-lotto-status --id 1484 --count 40
+    npx hardhat send-nft-plt --network mainnet
 ```
 
 ## Tags
